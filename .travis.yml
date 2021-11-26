@@ -1,0 +1,13 @@
+language: python
+python:
+  - 3.7
+before_install:
+  - pip install -U pip
+install:
+  - pip install ".[test]" . # install package + test dependencies
+script: nosetests --with-coverage # run tests
+deploy:
+  provider: pypi
+  user: __token__
+after_success:
+  - codecov
