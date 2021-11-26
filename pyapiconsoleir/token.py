@@ -71,9 +71,10 @@ class ClientCredentialToken(Token):
         url = '/token'
 
         encoded_basic_authentication = self.build_basic_authentication_token(self._consumer_key, self._consumer_secret)
-        return http_client._execute(
-            uri=url,
-            body={"grant_type": "client_credentials"},
+        return http_client._request(
+            resource=url,
+            data={"grant_type": "client_credentials"},
             method='post',
-            headers={'Authorization': f'Basic {encoded_basic_authentication}'}
+            headers={'Authorization': f'Basic {encoded_basic_authentication}'},
+            auth=False
         )
