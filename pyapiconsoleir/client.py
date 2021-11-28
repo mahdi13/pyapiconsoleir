@@ -26,8 +26,8 @@ class ApiconsoleClient:
         self.requests_extra_kwargs = requests_extra_kwargs or {}
         self.base_url = base_url or URL_MAINNET
 
-    def _request(self, resource: str, method='post', json: dict = None, data: dict = None, headers: dict = None,
-                 auth=True):
+    def _request(self, resource: str, method='post', params: dict = None, json: dict = None, data: dict = None,
+                 headers: dict = None, auth=True):
         method = method.upper()
         url = ''.join([self.base_url, resource])
         headers = headers or dict()
@@ -39,6 +39,7 @@ class ApiconsoleClient:
             url=url,
             data=data,
             json=json,
+            params=params,
             headers=headers
         )
         if response.status_code != 200:
@@ -60,6 +61,6 @@ class ApiconsoleClient:
             self._request(
                 '/ide/postalcode/v2.0/services/postal',
                 method='get',
-                json={'postalCode': str(postal_code)}
+                params={'code': str(postal_code)}
             ).get('addressInfo')
         )

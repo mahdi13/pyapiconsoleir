@@ -77,7 +77,7 @@ class MockPostalCodeToAddressV2(RestController):
 
     @json
     @authorize_client_credential
-    def post(self):
+    def get(self):
         return {
             'code': '1417994411',
             'addressInfo': {
