@@ -62,7 +62,7 @@ def authorize_basic(func):
     return wrapper
 
 
-class MockPostalCodeToAddress(RestController):
+class MockPostalCodeToAddressV1(RestController):
 
     @json
     @authorize_client_credential
@@ -70,6 +70,20 @@ class MockPostalCodeToAddress(RestController):
         return {
             'postalCode': '1417994411',
             'address': 'استان تهران، شهر تهران، دانشگاه تهران/14179، خيابان 16 آذر، پلاک 78، طبقه 10، واحد 1009، کد پستی:1417994411'
+        }
+
+
+class MockPostalCodeToAddressV2(RestController):
+
+    @json
+    @authorize_client_credential
+    def post(self):
+        return {
+            'code': '1417994411',
+            'addressInfo': {
+                'postalCode': '1417994411',
+                'address': 'استان تهران، شهر تهران، دانشگاه تهران/14179، خيابان 16 آذر، پلاک 78، طبقه 10، واحد 1009، کد پستی:1417994411'
+            }
         }
 
 
@@ -88,10 +102,14 @@ class MockTokenController(RestController):
 
 class ApiconsoleClientRootMockController(RestController):
     token = MockTokenController()
-    postalCodeToAddress = MockPostalCodeToAddress()
+    postalCodeToAddress = MockPostalCodeToAddressV1()
+    postal = MockPostalCodeToAddressV2()
 
     def __call__(self, *remaining_paths):
         if list(remaining_paths) == 'kyc/address/v1.0/postalCodeToAddress'.split('/'):
-            return super().__call__(*remaining_paths[3:])
+            return super().__call__(*remaining_paths[-1:])
+
+        if list(remaining_paths) == 'ide/postalcode/v2.0/services/postal'.split('/'):
+            return super().__call__(*remaining_paths[-1:])
 
         return super(ApiconsoleClientRootMockController, self).__call__(*remaining_paths)

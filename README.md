@@ -25,5 +25,8 @@ Initialize api client:
 from pyapiconsoleir import ApiconsoleClient
 
 api_client = ApiconsoleClient(consumer_key='MY-CONSUMER-KEY', consumer_secret='MY-CONSUMER-SECRET')
+
+print(api_client.postalcode_to_address_v2('4313118369'))
+
 ```
 

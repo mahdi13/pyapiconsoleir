@@ -48,7 +48,18 @@ class ApiconsoleClient:
             )
         return response.json()
 
-    def postalcode_to_address(self, postal_code) -> PostalCodeToAddress:
+    def postalcode_to_address_v1(self, postal_code) -> PostalCodeToAddress:
+        from warnings import warn
+        warn('Deprecated: postalcode_to_address_v1, please use postalcode_to_address_v2')
         return PostalCodeToAddress(
             self._request('/kyc/address/v1.0/postalCodeToAddress', json={'postalCode': str(postal_code)})
+        )
+
+    def postalcode_to_address_v2(self, postal_code) -> PostalCodeToAddress:
+        return PostalCodeToAddress(
+            self._request(
+                '/ide/postalcode/v2.0/services/postal',
+                method='get',
+                json={'postalCode': str(postal_code)}
+            ).get('addressInfo')
         )
