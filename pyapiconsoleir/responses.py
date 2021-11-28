@@ -2,6 +2,9 @@ class BaseApiconsoleResponse:
     def __init__(self, payload):
         self.payload = payload
 
+    def __repr__(self) -> str:
+        return str(self.payload)
+
 
 class PostalCodeToAddress(BaseApiconsoleResponse):
 
