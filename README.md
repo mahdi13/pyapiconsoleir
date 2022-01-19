@@ -2,7 +2,7 @@
 
 Python ApiConsole Api Client
 
-[![Build Status](https://travis-ci.org/mahdi13/pyapiconsoleir.svg?branch=master)](https://travis-ci.org/mahdi13/pyapiconsoleir)
+[![Build Status](https://travis-ci.com/mahdi13/pyapiconsoleir.svg?branch=master)](https://travis-ci.com/mahdi13/pyapiconsoleir)
 [![Build Status](https://badge.fury.io/py/pyapiconsoleir.svg)](https://pypi.org/project/pyapiconsoleir/)
 [![Build Status](https://pypip.in/d/pyapiconsoleir/badge.png)](https://pypi.org/project/pyapiconsoleir/)
 [![codecov](https://codecov.io/gh/mahdi13/pyapiconsoleir/branch/master/graph/badge.svg)](https://codecov.io/gh/mahdi13/pyapiconsoleir)
