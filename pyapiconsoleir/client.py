@@ -5,7 +5,7 @@ import logging
 
 from pyapiconsoleir.const import URL_MAINNET
 from pyapiconsoleir.exceptions import ApiconsoleHttpException
-from pyapiconsoleir.responses import PostalCodeToAddress, MatchPhoneToNationalCode
+from pyapiconsoleir.responses import PostalCodeToAddress, MatchPhoneToNationalCode, IdentityInquiry
 from pyapiconsoleir.token import ClientCredentialToken
 
 
@@ -79,5 +79,21 @@ class ApiconsoleClient:
                 '/kyc/match/number/v2.0/matching',
                 method='get',
                 params={'nationalCode': str(national_code), 'mobileNumber': mobile_number}
+            )
+        )
+
+    def identity_inquiry(self, national_code, birth_date) -> IdentityInquiry:
+
+        if national_code is None or not re.match('^[0-9]{10}$', national_code):
+            raise ValueError(f'Bad national id: {national_code}')
+
+        if birth_date is None or not re.match('^[0-9]{8}$', birth_date):
+            raise ValueError(f'Bad birthdate (sample: 13600101): {birth_date}')
+
+        return IdentityInquiry(
+            self._request(
+                '/ide/identity/v1/services/identity',
+                method='get',
+                params={'nationalCode': str(national_code), 'birthDate': birth_date}
             )
         )

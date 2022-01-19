@@ -18,6 +18,7 @@ invalid_mock_client_credential_tokens = [
 valid_mock_postal_code = '1417994411'
 valid_mock_national_code = '1234567890'
 valid_mock_phone_number = '09122345764'
+valid_mock_birth_date = '13600101'
 
 
 def authorize_client_credential(func):
@@ -100,6 +101,25 @@ class MockMatchPhoneToNationalCode(RestController):
         }
 
 
+class MockIdentityInquiry(RestController):
+
+    @json
+    @authorize_client_credential
+    def get(self):
+        return {
+            "nationalCode": "1111111111",
+            "birthDate": "13600101",
+            "identityInfo": {
+                "nationalCode": "1111111111",
+                "firstName": "تست",
+                "lastName": "تست",
+                "fatherName": "تست",
+                "birthDate": "13600101",
+                "alive": True,
+            }
+        }
+
+
 class MockTokenController(RestController):
 
     @json
@@ -118,6 +138,7 @@ class ApiconsoleClientRootMockController(RestController):
     postalCodeToAddress = MockPostalCodeToAddressV1()
     postal = MockPostalCodeToAddressV2()
     matching = MockMatchPhoneToNationalCode()
+    identity = MockIdentityInquiry()
 
     def __call__(self, *remaining_paths):
         if list(remaining_paths) == 'kyc/address/v1.0/postalCodeToAddress'.split('/'):
@@ -127,6 +148,9 @@ class ApiconsoleClientRootMockController(RestController):
             return super().__call__(*remaining_paths[-1:])
 
         if list(remaining_paths) == 'kyc/match/number/v2.0/matching'.split('/'):
+            return super().__call__(*remaining_paths[-1:])
+
+        if list(remaining_paths) == 'ide/identity/v1/services/identity'.split('/'):
             return super().__call__(*remaining_paths[-1:])
 
         return super(ApiconsoleClientRootMockController, self).__call__(*remaining_paths)
