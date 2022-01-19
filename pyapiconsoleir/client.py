@@ -1,9 +1,11 @@
+import re
+
 import requests
 import logging
 
 from pyapiconsoleir.const import URL_MAINNET
 from pyapiconsoleir.exceptions import ApiconsoleHttpException
-from pyapiconsoleir.responses import PostalCodeToAddress
+from pyapiconsoleir.responses import PostalCodeToAddress, MatchPhoneToNationalCode
 from pyapiconsoleir.token import ClientCredentialToken
 
 
@@ -63,4 +65,19 @@ class ApiconsoleClient:
                 method='get',
                 params={'code': str(postal_code)}
             ).get('addressInfo')
+        )
+
+    def match_phone_to_national_code(self, national_code, mobile_number) -> MatchPhoneToNationalCode:
+        if national_code is None or not re.match('^[0-9]{10}$', national_code):
+            raise ValueError(f'Bad national id: {national_code}')
+
+        if mobile_number is None or not re.match('^[0-9]{11}$', mobile_number):
+            raise ValueError(f'Bad phone number: {mobile_number}')
+
+        return MatchPhoneToNationalCode(
+            self._request(
+                '/kyc/match/number/v2.0/matching',
+                method='get',
+                params={'nationalCode': str(national_code), 'mobileNumber': mobile_number}
+            )
         )

@@ -15,3 +15,10 @@ class PostalCodeToAddress(BaseApiconsoleResponse):
     @property
     def address(self):
         return self.payload.get('address', None)
+
+
+class MatchPhoneToNationalCode(BaseApiconsoleResponse):
+
+    @property
+    def is_matched(self) -> bool:
+        return self.payload.get('matched', False) is True
