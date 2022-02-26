@@ -12,3 +12,4 @@ class IdentityInquiryTestCase(ApiClientTestCase):
         self.assertEqual('13600101', result.birth_date)
         self.assertEqual('1111111111', result.national_code)
         self.assertTrue(result.alive)
+        self.assertEqual('MALE', result.gender)

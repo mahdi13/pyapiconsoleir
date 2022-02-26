@@ -116,6 +116,10 @@ class MockIdentityInquiry(RestController):
                 "fatherName": "تست",
                 "birthDate": "13600101",
                 "alive": True,
+                'gender': 'MALE',
+                'identificationNumber': 0,
+                'identificationSerialNumber': 0,
+                'identificationSerialCode': 'ا99'
             }
         }
 
