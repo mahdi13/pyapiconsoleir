@@ -28,35 +28,41 @@ class IdentityInquiry(BaseApiconsoleResponse):
 
     @property
     def national_code(self) -> str:
-        return str(
+        result = \
             self.payload.get('identityInfo', None) and self.payload.get('identityInfo', None).get('nationalCode', None)
-        )
+        return str(result) if result is not None else None
 
     @property
     def first_name(self) -> str:
-        return str(
+        result = \
             self.payload.get('identityInfo', None) and self.payload.get('identityInfo', None).get('firstName', None)
-        )
+        return str(result) if result is not None else None
 
     @property
     def last_name(self) -> str:
-        return str(
+        result = \
             self.payload.get('identityInfo', None) and self.payload.get('identityInfo', None).get('lastName', None)
-        )
+        return str(result) if result is not None else None
 
     @property
     def father_name(self) -> str:
-        return str(
+        result = \
             self.payload.get('identityInfo', None) and self.payload.get('identityInfo', None).get('fatherName', None)
-        )
+        return str(result) if result is not None else None
 
     @property
     def birth_date(self) -> str:
-        return str(
+        result = \
             self.payload.get('identityInfo', None) and self.payload.get('identityInfo', None).get('birthDate', None)
-        )
+        return str(result) if result is not None else None
 
     @property
     def alive(self) -> bool:
         return (self.payload.get('identityInfo', None) and
                 self.payload.get('identityInfo', None).get('alive', None)) is True
+
+    @property
+    def gender(self) -> str:  # MALE or FEMALE
+        result = \
+            self.payload.get('identityInfo', None) and self.payload.get('identityInfo', None).get('gender', None)
+        return str(result) if result is not None else None
