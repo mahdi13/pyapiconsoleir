@@ -11,7 +11,7 @@ test_dependencies = ['nose', 'codecov']
 
 setup(
     name="pyapiconsoleir",
-    version='0.1.7',
+    version='0.1.8',
     author="mahdi13",
     tests_require=test_dependencies,
     extras_require={'test': test_dependencies},
