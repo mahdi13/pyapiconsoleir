@@ -1,7 +1,8 @@
+import logging
 import re
+from json import JSONDecodeError
 
 import requests
-import logging
 
 from pyapiconsoleir.const import URL_MAINNET
 from pyapiconsoleir.exceptions import ApiconsoleHttpException
@@ -49,7 +50,14 @@ class ApiconsoleClient:
                 response=response,
                 logger=self.logger
             )
-        return response.json()
+        try:
+            return response.json()
+        except JSONDecodeError as e:
+            raise ApiconsoleHttpException(
+                response=response,
+                logger=self.logger,
+                underlying_exception=e
+            )
 
     def postalcode_to_address_v1(self, postal_code) -> PostalCodeToAddress:
         from warnings import warn
